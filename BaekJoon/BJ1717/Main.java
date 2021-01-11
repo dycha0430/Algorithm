@@ -17,54 +17,40 @@ public class Main {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		
-		set = new int[n+2];
-		set[0] = -1;
+		set = new int[n+1];
+		
+        for (int i = 0; i < n+1; i++) set[i] = -1;
+        
 		for (int i = 0; i < m; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			int comm = Integer.parseInt(st.nextToken());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			if (comm == 0) {
-				union(a+1, b+1);
+				union(a, b);
 			} else{
-				if (contains(a+1, b+1)) System.out.println("YES");
+				if (findRoot(a) == findRoot(b)) System.out.println("YES");
 				else System.out.println("NO");
 			}
 		}
 	}
 
-	private static void union(int a, int b) {
-		if (contains(a, b)) return;
+	private static void union(int a, int b) {		
+		int rootA = findRoot(a);
+        int rootB = findRoot(b);
 		
-		int rootB = b;
-		while (set[rootB] != 0) {
-			rootB = set[rootB];
-		}
-		
-		int rootA = a;
-		while (set[rootA] != 0) {
-			int tmp = set[rootA];
-			set[rootA] = rootB;
-			rootA = tmp;
-		}
-		
-		set[rootA] = rootB;
+        if (rootA == rootB) return;
+        
+		if (set[rootA] < set[rootB]){
+            set[rootB] = rootA;
+        } else {
+            if (set[rootA] == set[rootB]) --set[rootB];
+            set[rootA] = rootB;
+        }
 	}
-	
-	private static boolean contains(int a, int b) {
-		int rootA = a;
-		int rootB = b;
-		
-		while (set[rootA] != 0) {
-			rootA = set[rootA];
-		}
-		
-		while (set[rootB] != 0) {
-			rootB = set[rootB];
-		}
-		
-		
-		if (rootA == rootB) return true;
-		else return false;
-	}
+    
+    private static int findRoot(int a){
+        if (set[a] < 0) return a;
+        else return set[a] = findRoot(set[a]);
+    }
 }
