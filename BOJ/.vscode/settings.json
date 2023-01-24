@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "queue": "cpp",
+        "iostream": "cpp",
+        "map": "cpp",
+        "memory": "cpp",
+        "limits": "cpp",
+        "streambuf": "cpp",
+        "typeinfo": "cpp",
+        "ostream": "cpp"
+    }
+}
